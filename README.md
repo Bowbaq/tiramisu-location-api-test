@@ -1,0 +1,1 @@
+This is a temporary project to explore the HTML5 Geolocation and Accelerometer APIs in combination with Phonegap. The end goal is to be able to collect meaningful data to infer the user's transportation mode, with a low power footprint. This will eventually be integrated into the new frontend for [Tiramisu](http://www.tiramisutransit.com/)
