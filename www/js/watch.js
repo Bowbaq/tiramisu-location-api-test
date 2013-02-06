@@ -1,4 +1,4 @@
-var socket = io.connect(window.location.origin);
+var socket = io.connect("http://sleepy-brook-7383.herokuapp.com");
 
 socket.emit('join:display');
 socket.on('location', function(location) {

@@ -14,7 +14,7 @@ app.configure(function(){
   app.set('port', process.env.PORT || 8080);
   
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'www')));
 });
 
 app.configure('development', function() {
@@ -26,11 +26,11 @@ app.configure('production', function() {
 });
 
 app.get('/', function (req, res) {
-  res.sendfile(path.join(__dirname, 'public/web/index.html'));
+  res.sendfile(path.join(__dirname, 'www/index.html'));
 });
 
 app.get('/watch', function (req, res) {
-  res.sendfile(path.join(__dirname, 'public/web/watch.html'));
+  res.sendfile(path.join(__dirname, 'www/watch.html'));
 });
 
 
