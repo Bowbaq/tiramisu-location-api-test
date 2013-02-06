@@ -14,7 +14,9 @@ socket.on('location', function(location) {
 
 
 function update_time() {
-  $('[data-timestamp=*]').each(function(e){
-    console.log(e);
-  })
+  $('[data-timestamp]').each(function(i, e) {
+    $(e).text(moment(new Date(+$(e).data('timestamp'))).fromNow());
+  });
 }
+
+setInterval(update_time, 1000);
