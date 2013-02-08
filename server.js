@@ -3,6 +3,7 @@ var express = require('express'),
   server = require('http').createServer(app), 
   io = require('socket.io').listen(server),
   path = require('path'),
+  mongoose = require('mongoose'),
   _ = require('lodash'),
   
   db = mongoose.connect(process.env.MONGOLAB_URI),
