@@ -3,9 +3,47 @@ var express = require('express'),
   server = require('http').createServer(app), 
   io = require('socket.io').listen(server),
   path = require('path'),
+  _ = require('lodash'),
   
-  display
+  db = mongoose.connect(process.env.MONGOLAB_URI),
+  
+  seqid
 ;
+
+//======================================
+//      mongoose config
+//======================================
+var GPSDataSchema =  mongoose.Schema({
+  time: Number,
+  lat:  Number,
+  lng:  Number,
+  seqid: Number,
+  type: String
+});
+var GPSData = mongoose.model('GPSData', GPSDataSchema);
+
+GPSData.helper = _.extend(GPSData.helper || {}, {
+  record: function(data) {
+    
+  }
+});
+
+var AccDataSchema =  mongoose.Schema({
+  time: Number,
+  x:  Number,
+  y:  Number,
+  z:  Number,
+  seqid: Number,
+  type: String
+});
+var AccData = mongoose.model('AccData', AccDataSchema);
+
+AccData.helper = _.extend(AccData.helper || {}, {
+  record: function(data) {
+    
+  }
+});
+
 
 //======================================
 //      express config
@@ -52,17 +90,15 @@ io.configure(function() {
 //======================================
 
 io.sockets.on('connection', function (socket) {
-  socket.on('join:display', function(){
-    display = socket;
-    display.on('disconnect', function(){
-      display = null;
-    });
+  socket.on('start', function (type) {
+    seqid++;
   });
   
-  socket.on('location', function (location) {
-    if(display) {
-      display.emit('location', location);
-    }
+  socket.on('gps', function (data) {
+    GPSData.helper.record(data);
+  });
+  socket.on('acc', function (data) {
+    AccData.helper.record(data);
   });
 });
 
@@ -70,10 +106,19 @@ io.sockets.on('connection', function (socket) {
 //      start server
 //======================================
 
-server.listen(app.get('port'), function() {
-    console.log(
-        "Express server listening on port %d in %s mode", 
-        app.get('port'), 
-        app.get('env')
-    );
+// Figure out the last sequence id
+GPSData.findOne().sort('-seqid').exec(function(err, data) {
+  if(err) {
+    seqid = 0;
+  } else {
+    seqid = data.seqid;
+  }
+  
+  server.listen(app.get('port'), function() {
+      console.log(
+          "Express server listening on port %d in %s mode", 
+          app.get('port'), 
+          app.get('env')
+      );
+  });
 });
