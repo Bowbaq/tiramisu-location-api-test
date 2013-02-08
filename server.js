@@ -109,7 +109,7 @@ io.sockets.on('connection', function (socket) {
 
 // Figure out the last sequence id
 GPSData.findOne().sort('-seqid').exec(function(err, data) {
-  if(err) {
+  if(err || !data) {
     seqid = 0;
   } else {
     seqid = data.seqid;
