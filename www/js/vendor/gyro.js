@@ -93,11 +93,13 @@
 			measurements.z = e.accelerationIncludingGravity.z - calibration.z;
 		}, true);
 		
-		window.navigator.accelerometer.watchAccelerometer(function(event){
-        measurements.x = event.x;
-        measurements.y = event.y;
-        measurements.z = event.z;
-    });
+		if(window.navigator.accelerometer !== undefined) {
+		  window.navigator.accelerometer.watchAccelerometer(function(event){
+          measurements.x = event.x;
+          measurements.y = event.y;
+          measurements.z = event.z;
+      });
+		}
 
 		window.addEventListener('deviceorientation', function(e) {
 			features.push('deviceorientation');
