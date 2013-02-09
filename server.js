@@ -91,14 +91,14 @@ io.configure(function() {
 //======================================
 
 io.sockets.on('connection', function (socket) {
-  socket.on('start', function (type) {
+  socket.on('start', function() {
     seqid++;
   });
   
-  socket.on('gps', function (data) {
+  socket.on('gps', function(data) {
     GPSData.helper.record(data);
   });
-  socket.on('acc', function (data) {
+  socket.on('acc', function(data) {
     AccData.helper.record(data);
   });
 });

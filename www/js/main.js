@@ -33,6 +33,8 @@ var DataCollector = (function(DataCollector){
     }
     
     gyro.startTracking(collectAcc);
+    
+    socket.emit('start', {});
   };
   
   DataCollector.stop = function stop() {
@@ -53,8 +55,7 @@ $('#start').on('click', function() {
   $('#start').attr('disabled', 'disabled');
   $('#stop').removeAttr('disabled');
   
-  current_type = $('#type').val();
-  DataCollector.collect();
+  DataCollector.collect($('#type').val());
 });
 
 $('#stop').on('click', function() {
