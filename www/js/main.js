@@ -1,4 +1,4 @@
-DataCollector = (function(DataCollector){
+var DataCollector = (function(DataCollector){
   var socket, current_type;
   
   var geo_id, geo_options = {
@@ -43,6 +43,8 @@ DataCollector = (function(DataCollector){
   DataCollector.init = function init() {
     socket = io.connect("http://gentle-falls-1532.herokuapp.com");
   };
+  
+  return DataCollector;
 })(DataCollector || {});
 
 DataCollector.init();
