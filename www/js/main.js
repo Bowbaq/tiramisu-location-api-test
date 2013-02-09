@@ -48,7 +48,7 @@ var DataCollector = (function(DataCollector){
 })(DataCollector || {});
 
 DataCollector.init();
-DataCollector.start();
+DataCollector.collect();
 
 // function geolocate() {
 //   if (Modernizr.geolocation) {
