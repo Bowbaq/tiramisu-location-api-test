@@ -36,7 +36,7 @@ var DataCollector = (function(DataCollector){
   };
   
   DataCollector.stop = function stop() {
-    clearWatch(geo_id);
+    navigator.geolocation.clearWatch(geo_id);
     gyro.stopTracking();
   };
   
