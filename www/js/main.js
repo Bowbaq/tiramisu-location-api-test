@@ -8,6 +8,7 @@ var DataCollector = (function(DataCollector){
   };
   
   function collectGPS(location) {
+    console.log("Emitting gps data");
     socket.emit('gps', {
       time: location.timestamp,
       lat: location.coords.latitude,
@@ -17,6 +18,7 @@ var DataCollector = (function(DataCollector){
   }
   
   function collectAcc(acc) {
+    console.log("Emitting acc data");
     socket.emit('acc', {
       time: Date.now(),
       x: acc.x,
@@ -27,6 +29,7 @@ var DataCollector = (function(DataCollector){
   }
   
   DataCollector.collect = function collect(type) {
+    console.log("Starting emission");
     current_type = type;
     if (Modernizr.geolocation) {
       geo_id = navigator.geolocation.watchPosition(collectGPS, null /* Do nothing on error */, geo_options);
@@ -38,6 +41,7 @@ var DataCollector = (function(DataCollector){
   };
   
   DataCollector.stop = function stop() {
+    console.log("Stopping emission");
     navigator.geolocation.clearWatch(geo_id);
     gyro.stopTracking();
   };
