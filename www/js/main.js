@@ -43,7 +43,7 @@ DataCollector = (function(DataCollector){
   DataCollector.init = function init() {
     socket = io.connect("http://gentle-falls-1532.herokuapp.com");
   };
-})();
+})(DataCollector || {});
 
 DataCollector.init();
 DataCollector.start();
