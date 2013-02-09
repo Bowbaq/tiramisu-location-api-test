@@ -48,26 +48,18 @@ var DataCollector = (function(DataCollector){
 })(DataCollector || {});
 
 DataCollector.init();
-DataCollector.collect();
 
-// function geolocate() {
-//   if (Modernizr.geolocation) {
-//     navigator.geolocation.watchPosition(geo_success, geo_error, {enableHighAccuracy: true, maximumAge: 30000, timeout: 27000});
-//   } else {
-//     $('body').append("Your device doesn't appear to support geolocation");
-//   }
-// }
-// 
-// function geo_success(location) {
-//   socket.emit('location', {
-//     time: location.timestamp,
-//     lat: location.coords.latitude,
-//     lng: location.coords.longitude
-//   });
-// }
-// 
-// function geo_error() {
-//   alert("Sorry, an error occured while geolocating");
-// }
-// 
-// $(geolocate);
+$('#start').on('click', function() {
+  $('#start').attr('disabled', 'disabled');
+  $('#stop').removeAttr('disabled');
+  
+  current_type = $('#type').val();
+  DataCollector.collect();
+});
+
+$('#stop').on('click', function() {
+  $('#stop').removeAttr('disabled');
+  $('#start').attr('disabled', 'disabled');
+  
+  DataCollector.stop();
+});
