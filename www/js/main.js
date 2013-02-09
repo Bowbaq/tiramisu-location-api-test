@@ -58,8 +58,8 @@ $('#start').on('click', function() {
 });
 
 $('#stop').on('click', function() {
-  $('#stop').removeAttr('disabled');
-  $('#start').attr('disabled', 'disabled');
+  $('#start').removeAttr('disabled');
+  $('#stop').attr('disabled', 'disabled');
   
   DataCollector.stop();
 });
