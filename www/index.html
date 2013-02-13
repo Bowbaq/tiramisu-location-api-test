@@ -33,23 +33,39 @@
         <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
         -->
 
-        <link rel="stylesheet" href="../css/normalize.css">
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-
         <!-- Add your site or application content here -->
-        <select name="type" id="type">
-            <option value="still">Still</option>
-            <option value="walking">Walking</option>
-            <option value="biking">Biking</option>
-            <option value="busing">Busing</option>
-            <option value="driving">Driving</option>
-        </select>
-        <button id="start">Start</button>
-        <button id="stop" disabled="disabled">Stop</button>
-
+        <div class="container">
+            <form>
+                <div class="control-group">
+                    <div class="controls">
+                        <select name="type" id="type">
+                            <option value="still">Still</option>
+                            <option value="walking">Walking</option>
+                            <option value="biking">Biking</option>
+                            <option value="busing">Busing</option>
+                            <option value="driving">Driving</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-large btn-success" id="start">Start</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-large btn-danger" id="stop" disabled="disabled">Stop</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
         <script src="js/vendor/zepto.min.js"></script>
         <script src="http://gentle-falls-1532.herokuapp.com/socket.io/socket.io.js"></script>
         <script src="js/vendor/gyro.js"></script>
