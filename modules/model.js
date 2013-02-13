@@ -1,20 +1,20 @@
 var _ = require('lodash');
 var mongoose = require('mongoose');
-var db = mongoose.connect(process.env.MONGOLAB_URI || "mongodb://heroku_app11716489:ummbanfiojefmobsp8tiv7r4un@ds037997.mongolab.com:37997/heroku_app11716489");
+var db = mongoose.connect(process.env.MONGOLAB_URI);
 
 //======================================
 //      mongoose config
 //======================================
-module.exports.GPSDataSchema =  mongoose.Schema({
+var GPSDataSchema = mongoose.Schema({
   time: { type: Date, default: Date.now },
   lat:  Number,
   lng:  Number,
   seqid: Number,
   type: String
 });
-module.exports.GPSData = mongoose.model('GPSData', module.exports.GPSDataSchema);
+var GPSData = mongoose.model('GPSData', GPSDataSchema);
 
-module.exports.GPSData.helper = _.extend(module.exports.GPSData.helper || {}, {
+GPSData.helper = _.extend(GPSData.helper || {}, {
   record: function(data, seqid) {
     console.log('Got gps data :', data);
     data.seqid = seqid;
@@ -26,7 +26,7 @@ module.exports.GPSData.helper = _.extend(module.exports.GPSData.helper || {}, {
   },
   
   findAll: function(callback) {
-    module.exports.GPSData.find().exec(function(err, data){
+    GPSData.find().exec(function(err, data){
       if(err){
         callback({});
       } else {
@@ -36,7 +36,7 @@ module.exports.GPSData.helper = _.extend(module.exports.GPSData.helper || {}, {
   }
 });
 
-module.exports.AccDataSchema =  mongoose.Schema({
+var AccDataSchema =  mongoose.Schema({
   time: { type: Date, default: Date.now },
   x:  Number,
   y:  Number,
@@ -44,9 +44,9 @@ module.exports.AccDataSchema =  mongoose.Schema({
   seqid: Number,
   type: String
 });
-module.exports.AccData = mongoose.model('AccData', module.exports.AccDataSchema);
+var AccData = mongoose.model('AccData', AccDataSchema);
 
-module.exports.AccData.helper = _.extend(module.exports.AccData.helper || {}, {
+AccData.helper = _.extend(AccData.helper || {}, {
   record: function(data, seqid) {
     console.log('Got accelerometer data :', data);
     data.seqid = seqid;
@@ -58,7 +58,7 @@ module.exports.AccData.helper = _.extend(module.exports.AccData.helper || {}, {
   },
   
   findAll: function(callback) {
-    module.exports.AccData.find().exec(function(err, data){
+    AccData.find().exec(function(err, data){
       if(err){
         callback({});
       } else {
@@ -68,12 +68,17 @@ module.exports.AccData.helper = _.extend(module.exports.AccData.helper || {}, {
   }
 });
 
+module.exports.GPSDataSchema = GPSDataSchema;
+module.exports.GPSData = GPSData;
+module.exports.AccDataSchema = AccDataSchema;
+module.exports.AccData = AccData;
+
 module.exports.lastSeqId = function(callback){
-  module.exports.GPSData.findOne().sort('-seqid').exec(function(err, data) {
+  GPSData.findOne().sort('-seqid').exec(function(err, data) {
     if(err || !data) {
       callback(0);
     } else {
       callback(data.seqid);
     }
   });
-}
+};
