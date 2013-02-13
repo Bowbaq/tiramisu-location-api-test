@@ -15,7 +15,7 @@ module.exports.GPSDataSchema =  mongoose.Schema({
 module.exports.GPSData = mongoose.model('GPSData', module.exports.GPSDataSchema);
 
 module.exports.GPSData.helper = _.extend(module.exports.GPSData.helper || {}, {
-  record: function(data) {
+  record: function(data, seqid) {
     console.log('Got gps data :', data);
     data.seqid = seqid;
     var record = new GPSData(data).save(function(err){
@@ -47,7 +47,7 @@ module.exports.AccDataSchema =  mongoose.Schema({
 module.exports.AccData = mongoose.model('AccData', module.exports.AccDataSchema);
 
 module.exports.AccData.helper = _.extend(module.exports.AccData.helper || {}, {
-  record: function(data) {
+  record: function(data, seqid) {
     console.log('Got accelerometer data :', data);
     data.seqid = seqid;
     var record = new AccData(data).save(function(err){

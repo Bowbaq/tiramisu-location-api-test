@@ -61,10 +61,10 @@ io.sockets.on('connection', function (socket) {
   });
   
   socket.on('gps', function(data) {
-    model.GPSData.helper.record(data);
+    model.GPSData.helper.record(data, seqid);
   });
   socket.on('acc', function(data) {
-    model.AccData.helper.record(data);
+    model.AccData.helper.record(data, seqid);
   });
 });
 
@@ -73,6 +73,7 @@ io.sockets.on('connection', function (socket) {
 //======================================
 model.lastSeqId(function(id){
   seqid = id;
+  console.log(seqid);
   server.listen(app.get('port'), function() {
       console.log(
           "Express server listening on port %d in %s mode", 
