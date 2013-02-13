@@ -26,7 +26,13 @@ module.exports.GPSData.helper = _.extend(module.exports.GPSData.helper || {}, {
   },
   
   findAll: function(callback) {
-    
+    module.exports.GPSData.find().exec(function(err, data){
+      if(err){
+        callback({});
+      } else {
+        callback(data);
+      }
+    });
   }
 });
 
@@ -52,7 +58,13 @@ module.exports.AccData.helper = _.extend(module.exports.AccData.helper || {}, {
   },
   
   findAll: function(callback) {
-    
+    module.exports.AccData.find().exec(function(err, data){
+      if(err){
+        callback({});
+      } else {
+        callback(data);
+      }
+    });
   }
 });
 

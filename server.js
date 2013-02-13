@@ -32,6 +32,9 @@ app.get('/', function (req, res) {
   res.sendfile(path.join(__dirname, 'www/index.html'));
 });
 
+app.get('/data/csv/acc', analyse.csvacc);
+app.get('/data/csv/gps', analyse.csvgps);
+
 app.get('/data', analyse.show);
 
 
