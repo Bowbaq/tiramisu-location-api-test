@@ -6,7 +6,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   _ = require('lodash'),
   
-  db = mongoose.connect(process.env.MONGOLAB_URI),
+  db = mongoose.connect(process.env.MONGOLAB_URI || "mongodb://heroku_app11716489:ummbanfiojefmobsp8tiv7r4un@ds037997.mongolab.com:37997/heroku_app11716489"),
   
   seqid
 ;
@@ -15,7 +15,7 @@ var express = require('express'),
 //      mongoose config
 //======================================
 var GPSDataSchema =  mongoose.Schema({
-  time: Number,
+  time: { type: Date, default: Date.now },
   lat:  Number,
   lng:  Number,
   seqid: Number,
@@ -36,7 +36,7 @@ GPSData.helper = _.extend(GPSData.helper || {}, {
 });
 
 var AccDataSchema =  mongoose.Schema({
-  time: Number,
+  time: { type: Date, default: Date.now },
   x:  Number,
   y:  Number,
   z:  Number,

@@ -10,7 +10,7 @@ var DataCollector = (function(DataCollector){
   function collectGPS(location) {
     console.log("Emitting gps data");
     socket.emit('gps', {
-      time: location.timestamp,
+      time: new Date(location.timestamp),
       lat: location.coords.latitude,
       lng: location.coords.longitude,
       type: current_type
