@@ -3,60 +3,12 @@ var express = require('express'),
   server = require('http').createServer(app), 
   io = require('socket.io').listen(server),
   path = require('path'),
-  mongoose = require('mongoose'),
-  _ = require('lodash'),
   
-  db = mongoose.connect(process.env.MONGOLAB_URI || "mongodb://heroku_app11716489:ummbanfiojefmobsp8tiv7r4un@ds037997.mongolab.com:37997/heroku_app11716489"),
+  model = require('./modules/model'),
+  analyse = require('./modules/analyse'),
   
   seqid
 ;
-
-//======================================
-//      mongoose config
-//======================================
-var GPSDataSchema =  mongoose.Schema({
-  time: { type: Date, default: Date.now },
-  lat:  Number,
-  lng:  Number,
-  seqid: Number,
-  type: String
-});
-var GPSData = mongoose.model('GPSData', GPSDataSchema);
-
-GPSData.helper = _.extend(GPSData.helper || {}, {
-  record: function(data) {
-    console.log('Got gps data :', data);
-    data.seqid = seqid;
-    var record = new GPSData(data).save(function(err){
-      if(err) {
-        console.log(err);
-      }
-    });
-  }
-});
-
-var AccDataSchema =  mongoose.Schema({
-  time: { type: Date, default: Date.now },
-  x:  Number,
-  y:  Number,
-  z:  Number,
-  seqid: Number,
-  type: String
-});
-var AccData = mongoose.model('AccData', AccDataSchema);
-
-AccData.helper = _.extend(AccData.helper || {}, {
-  record: function(data) {
-    console.log('Got accelerometer data :', data);
-    data.seqid = seqid;
-    var record = new AccData(data).save(function(err){
-      if(err) {
-        console.log(err);
-      }
-    });
-  }
-});
-
 
 //======================================
 //      express config
@@ -80,9 +32,7 @@ app.get('/', function (req, res) {
   res.sendfile(path.join(__dirname, 'www/index.html'));
 });
 
-app.get('/watch', function (req, res) {
-  res.sendfile(path.join(__dirname, 'www/watch.html'));
-});
+app.get('/data', analyse.show);
 
 
 //======================================
@@ -108,25 +58,18 @@ io.sockets.on('connection', function (socket) {
   });
   
   socket.on('gps', function(data) {
-    GPSData.helper.record(data);
+    model.GPSData.helper.record(data);
   });
   socket.on('acc', function(data) {
-    AccData.helper.record(data);
+    model.AccData.helper.record(data);
   });
 });
 
 //======================================
 //      start server
 //======================================
-
-// Figure out the last sequence id
-GPSData.findOne().sort('-seqid').exec(function(err, data) {
-  if(err || !data) {
-    seqid = 0;
-  } else {
-    seqid = data.seqid;
-  }
-  
+model.lastSeqId(function(id){
+  seqid = id;
   server.listen(app.get('port'), function() {
       console.log(
           "Express server listening on port %d in %s mode", 
