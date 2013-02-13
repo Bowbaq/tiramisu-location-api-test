@@ -20,7 +20,7 @@ var DataCollector = (function(DataCollector){
   function collectAcc(acc) {
     console.log("Emitting acc data");
     socket.emit('acc', {
-      time: Date.now(),
+      time: new Date(),
       x: acc.x,
       y: acc.y,
       z: acc.z,
