@@ -10,10 +10,13 @@ var json2csv = require('json2csv');
   };
   
   var analyse = function analyse(data){
-    result = {};
-    result.gps = _.groupBy(data.gps, function(e){ return e.seqid; });    
-    result.acc = _.groupBy(data.acc, function(e){ return e.seqid; });
-    _.forEach(result.acc, function(values){
+    result = {
+      acc: [],
+      gps: []
+    };
+    var acc = _.groupBy(data.gps, function(e){ return e.seqid; });    
+    var gps = _.groupBy(data.acc, function(e){ return e.seqid; });
+    _.forEach(acc, function(values){
       metrics = {};
       
       metrics.meanx = num.statistic.mean(_.map(_.pluck(values, 'x'), zeroIfNull));
@@ -31,10 +34,8 @@ var json2csv = require('json2csv');
       metrics.maxx = Math.max.apply(null, _.map(_.pluck(values, 'x'), zeroIfNull));
       metrics.maxy = Math.max.apply(null, _.map(_.pluck(values, 'y'), zeroIfNull));
       metrics.maxz = Math.max.apply(null, _.map(_.pluck(values, 'z'), zeroIfNull));
-      
-      
-      
-      console.log(metrics);
+
+      result.acc.append(metrics);
     });
     
     return result;
@@ -64,7 +65,7 @@ var json2csv = require('json2csv');
   
   exports.csvgps = function csvgps(req, res){
     model.GPSData.helper.findAll(function(data){
-      json2csv({data: data, fields: ['seqid', 'lat', 'lng', 'time', 'type']}, function(csv) {
+      json2csv({data: data, fields: ['seqid', 'lat', 'lng', 'speed', 'time', 'type']}, function(csv) {
         res.set('Content-Type', 'text/plain');
         res.send(csv);
       });

@@ -9,6 +9,7 @@ var GPSDataSchema = mongoose.Schema({
   time: { type: Date, default: Date.now },
   lat:  Number,
   lng:  Number,
+  speed: Number,
   seqid: Number,
   type: String
 });
