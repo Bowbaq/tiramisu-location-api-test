@@ -12,7 +12,7 @@ var DataCollector = (function(DataCollector){
       time: new Date(location.timestamp),
       lat: location.coords.latitude,
       lng: location.coords.longitude,
-      speed: location.coords.speed,
+      speed: location.coords.speed || 0,
       type: current_type
     });
     
