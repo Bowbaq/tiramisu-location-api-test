@@ -9,16 +9,29 @@ var json2csv = require('json2csv');
     return e == null || e == undefined ? 0 : e;
   };
   
+  var isOnBus = function(metrics) {
+    var score = 0;
+    var varsum = metrics.varx + metrics.vary + metrics.varz;
+    
+    if(varsum > 2 && varsum < 12) {
+      score++;
+    }
+    
+    return score > 0;
+  };
+  
   var analyse = function analyse(data){
     result = {
       acc: {},
       gps: {}
     };
-    var acc = _.groupBy(data.gps, function(e){ return e.seqid; });    
-    var gps = _.groupBy(data.acc, function(e){ return e.seqid; });
+    var acc = _.groupBy(data.acc, function(e){ return e.seqid; });    
+    var gps = _.groupBy(data.gps, function(e){ return e.seqid; });
     _.forEach(acc, function(values, seqid){
       metrics = {};
       
+      metrics.type = values[0].type;
+            
       metrics.meanx = num.statistic.mean(_.map(_.pluck(values, 'x'), zeroIfNull));
       metrics.meany = num.statistic.mean(_.map(_.pluck(values, 'y'), zeroIfNull));
       metrics.meanz = num.statistic.mean(_.map(_.pluck(values, 'z'), zeroIfNull));
@@ -34,6 +47,8 @@ var json2csv = require('json2csv');
       metrics.maxx = Math.max.apply(null, _.map(_.pluck(values, 'x'), zeroIfNull));
       metrics.maxy = Math.max.apply(null, _.map(_.pluck(values, 'y'), zeroIfNull));
       metrics.maxz = Math.max.apply(null, _.map(_.pluck(values, 'z'), zeroIfNull));
+      
+      metrics.isOnBus = isOnBus(metrics);
 
       result.acc[seqid] = metrics;
     });
