@@ -80,7 +80,7 @@ var json2csv = require('json2csv');
   
   exports.csvgps = function csvgps(req, res){
     model.GPSData.helper.findAll(function(data){
-      json2csv({data: data, fields: ['seqid', 'lat', 'lng', 'time', 'type']}, function(csv) {
+      json2csv({data: data, fields: ['seqid', 'lat', 'lng', 'speed', 'time', 'type']}, function(csv) {
         res.set('Content-Type', 'text/plain');
         res.send(csv);
       });
