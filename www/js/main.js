@@ -8,12 +8,19 @@ var DataCollector = (function(DataCollector){
   };
   
   function collectGPS(location) {
-    console.log("Emitting gps data");
     socket.emit('gps', {
       time: new Date(location.timestamp),
       lat: location.coords.latitude,
       lng: location.coords.longitude,
       speed: location.coords.speed,
+      type: current_type
+    });
+    
+    console.log({
+      time: new Date(location.timestamp),
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
+      speed: location.coords.speed || 0,
       type: current_type
     });
   }
