@@ -11,9 +11,27 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <style>
+          body {
+            font: 10px sans-serif;
+          }
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+          .axis path,
+          .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+          }
+
+          .bar {
+            fill: steelblue;
+          }
+
+          .x.axis path {
+            display: none;
+          }
+        </style>
+        
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -23,7 +41,18 @@
 
         <!-- Add your site or application content here -->
 
-        <script src="js/vendor/zepto.min.js"></script>
+        <!-- <script src="js/vendor/zepto.min.js"></script> -->
+        <script src="js/vendor/d3.v3.min.js"></script>
+        <script src="js/view.js"></script>
+        <script type="text/javascript" charset="utf-8">
+          graph("/dist/acc/still", "x", "[Acc][Still] (stddevx)");
+          graph("/dist/acc/still", "y", "[Acc][Still] (stddevy)");
+          graph("/dist/acc/still", "z", "[Acc][Still] (stddevz)");
+          
+          graph("/dist/acc/walking", "x", "[Acc][Walking] (stddevx)");
+          graph("/dist/acc/walking", "y", "[Acc][Walking] (stddevy)");
+          graph("/dist/acc/walking", "z", "[Acc][Walking] (stddevz)");
+        </script>
         <!-- <script src="js/vendor/moment.js"></script> -->
         <!-- <script src="/socket.io/socket.io.js"></script> -->
         <!-- <script src="js/watch.js"></script> -->
