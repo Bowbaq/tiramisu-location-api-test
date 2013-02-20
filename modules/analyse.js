@@ -11,12 +11,12 @@ var json2csv = require('json2csv');
   
   var analyse = function analyse(data){
     result = {
-      acc: [],
-      gps: []
+      acc: {},
+      gps: {}
     };
     var acc = _.groupBy(data.gps, function(e){ return e.seqid; });    
     var gps = _.groupBy(data.acc, function(e){ return e.seqid; });
-    _.forEach(acc, function(values){
+    _.forEach(acc, function(values, seqid){
       metrics = {};
       
       metrics.meanx = num.statistic.mean(_.map(_.pluck(values, 'x'), zeroIfNull));
@@ -35,7 +35,7 @@ var json2csv = require('json2csv');
       metrics.maxy = Math.max.apply(null, _.map(_.pluck(values, 'y'), zeroIfNull));
       metrics.maxz = Math.max.apply(null, _.map(_.pluck(values, 'z'), zeroIfNull));
 
-      result.acc.append(metrics);
+      result.acc[seqid] = metrics;
     });
     
     return result;
