@@ -17,7 +17,7 @@ var GPSData = mongoose.model('GPSData', GPSDataSchema);
 
 GPSData.helper = _.extend(GPSData.helper || {}, {
   record: function(data, seqid) {
-    console.log('Got gps data :', data);
+    console.log('GPS:', data);
     data.seqid = seqid;
     var record = new GPSData(data).save(function(err){
       if(err) {
@@ -49,7 +49,7 @@ var AccData = mongoose.model('AccData', AccDataSchema);
 
 AccData.helper = _.extend(AccData.helper || {}, {
   record: function(data, seqid) {
-    console.log('Got accelerometer data :', data);
+    // console.log('Got accelerometer data :', data);
     data.seqid = seqid;
     var record = new AccData(data).save(function(err){
       if(err) {

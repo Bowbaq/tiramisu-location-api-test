@@ -61,6 +61,7 @@ io.sockets.on('connection', function (socket) {
   });
   
   socket.on('gps', function(data) {
+    console.log('-> GPS:', data);
     model.GPSData.helper.record(data, seqid);
   });
   socket.on('acc', function(data) {

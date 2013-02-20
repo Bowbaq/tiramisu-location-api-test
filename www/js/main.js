@@ -15,14 +15,6 @@ var DataCollector = (function(DataCollector){
       speed: location.coords.speed || 0,
       type: current_type
     });
-    
-    console.log({
-      time: new Date(location.timestamp),
-      lat: location.coords.latitude,
-      lng: location.coords.longitude,
-      speed: location.coords.speed || 0,
-      type: current_type
-    });
   }
   
   function collectAcc(acc) {
